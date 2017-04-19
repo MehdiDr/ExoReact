@@ -1,0 +1,22 @@
+.container{
+  display: flex;
+  justify-content: center;
+}
+.color-container{
+  margin-left: 10em;
+  display: flex;
+  flex-wrap: wrap;
+  width: 40em;
+}
+.color-container button{
+  border: 0;
+  border-radius: 0.2em;
+  color: #FFF;
+  padding: 0.5em;
+  min-width: 120px;
+}
+
+.color-container li{
+  list-style-type: none;
+  padding:0.5em;
+}

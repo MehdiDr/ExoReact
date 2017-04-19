@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
+import Header from './Components/Header/Header';
+import ColorList from './Components/List/ColorList';
+import Form from './Components/Form/Form';
 import './App.css';
 
 class App extends Component {
-
-
   state = {
     colors : [
           {id:1, name:'violet', color:'#f5aafb'},
@@ -16,6 +16,7 @@ class App extends Component {
     ]
   }
 
+// prendre la valeur de l'input
   handleChange = (event) => {
     const target = event.target;
     const value = target.value;
@@ -24,21 +25,32 @@ class App extends Component {
     this.setState({[name] : value});
   }
 
-  changeColor(color) {
+// Modifier la couleur du background
+  changeColor = (color)=> {
     this.setState({
       objStyle : {backgroundColor: color}
     });
   }
 
-  addButton(){
+  addColor = () => {
     this.setState( (state) => {
       state.colors = state.colors.concat({id:this.state.colors.length+1,name:this.state.nameColor, color:this.state.color});
     });
   }
-
-  btnDelete(){
+// supprimer la dernière couleur
+  btnDelete= () => {
     this.setState( (state) => {
       state.colors = state.colors.slice(0, state.colors.length-1);
+      return state.colors;
+    });
+  }
+
+// Function qui génère une couleur aléatoire
+  getRandomColor=() => {
+    this.setState((state)=> {
+      const random = Math.floor(Math.random(this.state.colors.length) * 10);
+      state.colors = state.colors[random];
+      console.log(random);
       return state.colors;
     });
   }
@@ -46,33 +58,15 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header" style={this.state.objStyle}>
-          <img src='https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAsNAAAAJDYzODMwZWFiLWIwYmUtNDE0MC04MTY1LTEwMTE2OWI2NzJkZA.jpg' className="App-logo" alt="logo" />
-          <h2>Coloring button avec Davido qui tourne</h2>
-        </div>
+        <Header objStyle={this.state.objStyle}/>
         <p className="App-intro">
           Quand je clique sur le bouton, je change la couleur
         </p>
-        <div className="container">
-        <ul className="color-container"> {
-          this.state.colors.map(item =>
-             <li><button style={{backgroundColor: item.color}} onClick={() => this.changeColor(item.color)}>{item.name}</button></li>
-           )
-           }
-        </ul>
-        <form onSubmit={this.handleChange} className="addColor">
-          <h3>ADD A NEW COLOR</h3>
-          <p>Color Name : </p>
-          <input type='text' name='nameColor' onChange={this.handleChange}></input>
-          <p>HEX Color : </p>
-          <input type='text' name='color' onChange={this.handleChange}></input><br></br>
-          <button type='submit' className="btnAdd" onClick={() => this.addButton()}>Add color</button>
-          <button className="btnDelete" onClick={() =>this.btnDelete()}> Delete the last color</button>
-        </form>
-      </div>
+        <ColorList colors={this.state.colors} onChange={this.handleCHange} changeColor={this.changeColor}/>
+        <Form addColor={this.addColor} btnDelete={this.btnDelete} handleChange={this.handleChange}/>
+        <button onClick={this.getRandomColor}>Random !</button>
       </div>
     );
   }
 }
-
 export default App;

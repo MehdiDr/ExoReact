@@ -1,0 +1,9 @@
+.form{
+  padding: 2%;
+  background-color: grey;
+  margin-left: 10em;
+  border-radius: 0.5em;
+  min-height: 300px;
+  max-height: 300px;
+  width: 50%;
+}
